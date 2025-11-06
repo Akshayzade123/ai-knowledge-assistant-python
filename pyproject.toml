@@ -1,0 +1,127 @@
+[project]
+name = "ai-knowledge-assistant"
+version = "1.0.0"
+description = "Enterprise AI Knowledge Assistant with RAG capabilities using Gemini 2.5, PostgreSQL, and Weaviate"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [{ name = "Sabry Awad", email = "dr.sabry1997@gmail.com" }]
+license = { text = "MIT" }
+keywords = ["rag", "ai", "knowledge-base", "gemini", "weaviate", "fastapi"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: FastAPI",
+]
+
+dependencies = [
+    # FastAPI and Web Framework
+    "fastapi>=0.121.0",
+    "uvicorn[standard]>=0.38.0",
+    "python-multipart>=0.0.20",
+    # Pydantic for validation
+    "pydantic>=2.12.4",
+    "pydantic-settings>=2.11.0",
+    "email-validator>=2.3.0",
+    # Database
+    "sqlalchemy>=2.0.44",
+    "asyncpg>=0.30.0",
+    "psycopg2-binary>=2.9.11",
+    # Vector Database
+    "weaviate-client>=4.17.0",
+    # LLM and AI
+    "google-genai>=1.49.0",
+    # Authentication
+    "python-jose[cryptography]>=3.5.0",
+    "passlib[bcrypt]>=1.7.4",
+    "bcrypt>=4.0.0,<5.0.0",
+    # Document Processing
+    "PyPDF2>=3.0.1",
+    "python-docx>=1.2.0",
+    # Utilities
+    "python-dotenv>=1.2.1",
+    "httpx>=0.28.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "black>=25.9.0",
+    "ruff>=0.1.14",
+    "mypy>=1.8.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/sabry-awad97/ai-knowledge-assistant"
+Documentation = "https://github.com/sabry-awad97/ai-knowledge-assistant#readme"
+Repository = "https://github.com/sabry-awad97/ai-knowledge-assistant"
+Issues = "https://github.com/sabry-awad97/ai-knowledge-assistant/issues"
+
+[project.scripts]
+ai-knowledge-assistant = "app.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/app"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=6.0.0",
+    "pytest-xdist>=3.6.1",
+    "httpx>=0.28.1",
+    "black>=25.9.0",
+    "ruff>=0.1.14",
+    "mypy>=1.8.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501", # line too long (handled by black)
+    "B008", # do not perform function calls in argument defaults
+    "C901", # too complex
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.black]
+line-length = 100
+target-version = ["py313"]
+include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+testpaths = ["src/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true

@@ -1,0 +1,113 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:18-alpine
+    container_name: ai-knowledge-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ai_knowledge_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ai-knowledge-network
+
+  # Weaviate Vector Database
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.34.0
+    container_name: ai-knowledge-weaviate
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8080'
+      - --scheme
+      - http
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      ENABLE_MODULES: 'text2vec-ollama,generative-ollama'
+      CLUSTER_HOSTNAME: 'node1'
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    restart: on-failure:0
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8080/v1/.well-known/ready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ai-knowledge-network
+
+  # FastAPI Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-knowledge-assistant-api:latest
+    container_name: ai-knowledge-api
+    models:
+      - embedding-gemma
+    environment:
+      # Database
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ai_knowledge_db
+
+      # Weaviate
+      WEAVIATE_HOST: weaviate
+      WEAVIATE_PORT: 8080
+      WEAVIATE_GRPC_PORT: 50051
+
+      # Docker AI (for embeddings)
+      DOCKER_AI_URL: ${DOCKER_AI_URL:-http://host.docker.internal:12434}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-ai/embeddinggemma}
+
+      # Gemini API (for generation only)
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+
+      # Security
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+
+      # Logging
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./src:/app/src
+      - ./asgi.py:/app/asgi.py
+    depends_on:
+      postgres:
+        condition: service_healthy
+      weaviate:
+        condition: service_healthy
+    networks:
+      - ai-knowledge-network
+    command: python asgi.py
+
+volumes:
+  postgres_data:
+  weaviate_data:
+
+
+models:
+  embedding-gemma:
+    model: ${EMBEDDING_MODEL:-ai/embeddinggemma}
+
+networks:
+  ai-knowledge-network:
+    driver: bridge
