@@ -396,7 +396,7 @@ export class KnowledgeAssistantAPI {
     formData.append('department', department);
     formData.append('access_level', 'department');
 
-    const response = await fetch(`${API_BASE}/documents/upload`, {
+    const response = await fetch(`${API_BASE}/query/upload`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${this.token}` },
       body: formData,
@@ -405,7 +405,7 @@ export class KnowledgeAssistantAPI {
   }
 
   async askQuestion(question: string) {
-    const response = await fetch(`${API_BASE}/query`, {
+    const response = await fetch(`${API_BASE}/query/ask`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.token}`,
@@ -420,7 +420,7 @@ export class KnowledgeAssistantAPI {
   }
 
   async getDocuments() {
-    const response = await fetch(`${API_BASE}/documents`, {
+    const response = await fetch(`${API_BASE}/query/documents`, {
       headers: { 'Authorization': `Bearer ${this.token}` },
     });
     return response.json();
@@ -557,7 +557,7 @@ const token = localStorage.getItem('token');
 const askQuestion = async () => {
   loading.value = true;
   try {
-    const response = await fetch('http://localhost:8000/api/v1/query', {
+    const response = await fetch('http://localhost:8000/api/v1/query/ask', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -601,7 +601,7 @@ class KnowledgeAssistant {
   }
 
   async askQuestion(question) {
-    const response = await fetch(`${this.apiBase}/query`, {
+    const response = await fetch(`${this.apiBase}/query/ask`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.token}`,
@@ -674,7 +674,7 @@ class KnowledgeAssistantClient:
                 'access_level': access_level
             }
             response = requests.post(
-                f"{self.base_url}/documents/upload",
+                f"{self.base_url}/query/upload",
                 headers={"Authorization": f"Bearer {self.token}"},
                 files=files,
                 data=data
@@ -683,7 +683,7 @@ class KnowledgeAssistantClient:
     
     def ask_question(self, question: str) -> Dict:
         response = requests.post(
-            f"{self.base_url}/query",
+            f"{self.base_url}/query/ask",
             headers={"Authorization": f"Bearer {self.token}"},
             json={"question": question, "collection_name": "Documents"}
         )
@@ -691,7 +691,7 @@ class KnowledgeAssistantClient:
     
     def get_documents(self) -> List[Dict]:
         response = requests.get(
-            f"{self.base_url}/documents",
+            f"{self.base_url}/query/documents",
             headers={"Authorization": f"Bearer {self.token}"}
         )
         return response.json()
@@ -736,7 +736,7 @@ export class KnowledgeAssistantService {
   }
 
   async askQuestion(question: string) {
-    const response = await fetch(`${this.baseUrl}/query`, {
+    const response = await fetch(`${this.baseUrl}/query/ask`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.token}`,
